@@ -1,0 +1,140 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Navigation/Exit.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Navigation/Road.tscn" type="PackedScene" id=2]
+[ext_resource path="res://park2.png" type="Texture" id=3]
+[ext_resource path="res://Navigation/Bench.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Park.gd" type="Script" id=5]
+
+[node name="Park" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 1428.39, 857.187 )
+scale = Vector2( 1.44495, 1.44495 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Objects" type="Node" parent="."]
+
+[node name="Navigation" type="Node" parent="."]
+
+[node name="Targets" type="Node" parent="Navigation"]
+
+[node name="Bench1" parent="Navigation/Targets" instance=ExtResource( 4 )]
+position = Vector2( 190.273, 632.658 )
+rotation = -3.30042
+
+[node name="Bench2" parent="Navigation/Targets" instance=ExtResource( 4 )]
+position = Vector2( 2354.63, 366.276 )
+rotation = 0.253073
+
+[node name="Exits" type="Node" parent="Navigation"]
+
+[node name="Exit1" parent="Navigation/Exits" instance=ExtResource( 1 )]
+position = Vector2( -5.33939, 664.75 )
+
+[node name="Exit2" parent="Navigation/Exits" instance=ExtResource( 1 )]
+position = Vector2( 1073.21, 0.000274658 )
+
+[node name="Exit3" parent="Navigation/Exits" instance=ExtResource( 1 )]
+position = Vector2( 2181.13, 2.66968 )
+
+[node name="Exit4" parent="Navigation/Exits" instance=ExtResource( 1 )]
+position = Vector2( 2856.56, 117.466 )
+
+[node name="Exit5" parent="Navigation/Exits" instance=ExtResource( 1 )]
+position = Vector2( 2851.22, 1081.22 )
+
+[node name="Exit6" parent="Navigation/Exits" instance=ExtResource( 1 )]
+position = Vector2( 2848.55, 1286.79 )
+
+[node name="Exit7" parent="Navigation/Exits" instance=ExtResource( 1 )]
+position = Vector2( 2335.97, 1684.57 )
+
+[node name="Exit8" parent="Navigation/Exits" instance=ExtResource( 1 )]
+position = Vector2( 622.035, 1705.92 )
+
+[node name="Exit9" parent="Navigation/Exits" instance=ExtResource( 1 )]
+position = Vector2( -2.67041, 1161.31 )
+
+[node name="Roads" type="Node" parent="Navigation"]
+
+[node name="Road1" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 914.709, 302.683 )
+
+[node name="Road2" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 635.384, 373.755 )
+
+[node name="Road3" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 459.185, 555.293 )
+
+[node name="Road4" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 288.325, 603.347 )
+
+[node name="Road5" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 90.7687, 646.062 )
+
+[node name="Road6" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 122.805, 1147.96 )
+
+[node name="Road7" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 651.401, 1244.07 )
+
+[node name="Road8" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 816.922, 1019.82 )
+
+[node name="Road9" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 443.166, 726.153 )
+
+[node name="Road10" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 1067.87, 870.315 )
+
+[node name="Road11" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 1446.97, 816.922 )
+
+[node name="Road12" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 1681.9, 667.42 )
+
+[node name="Road13" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 1473.66, 576.65 )
+
+[node name="Road14" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 1286.79, 395.112 )
+
+[node name="Road15" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 2012.94, 421.809 )
+
+[node name="Road16" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 2434.75, 250.949 )
+
+[node name="Road17" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 2536.2, 411.13 )
+
+[node name="Road18" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 2562.89, 774.207 )
+
+[node name="Road19" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 2333.3, 1217.37 )
+
+[node name="Road20" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 2610.95, 1083.89 )
+
+[node name="Road21" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 2306.6, 1543.07 )
+
+[node name="Road22" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 2087.69, 1356.2 )
+
+[node name="Road23" parent="Navigation/Roads" instance=ExtResource( 2 )]
+position = Vector2( 1452.31, 1462.98 )
+
+[node name="Connections" type="Node" parent="Navigation"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 42.8115, 52.3251 )
+anchor_mode = 0
+current = true
+zoom = Vector2( 2.7, 2.7 )
