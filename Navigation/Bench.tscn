@@ -6,6 +6,7 @@
 extents = Vector2( 60, 25 )
 
 [node name="Bench" type="Node2D"]
+rotation = -1.5708
 __meta__ = {
 "_edit_group_": true
 }

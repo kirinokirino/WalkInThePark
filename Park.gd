@@ -4,14 +4,29 @@ var passerby = preload("res://Passerby.tscn")
 
 onready var objects := $Objects
 onready var connections := $Navigation/Connections
-var exits: Array;
-var targets: Array;
-var roads: Array;
-var navigation: Array;
-var visited: Array;
+var exits: Array
+var recent_exits: Array
+var targets: Array
+var occupied_targets: Array
+var roads: Array
+var navigation: Array
+var visited: Array
+
+const genders: Array = ["M", "F"]
+const M_names_list: Array = ["Alex", "Bob", "Peter", "Pedro"]
+const F_names_list: Array = ["Alex", "Lisa", "Victoria", "Elizabeth"]
+const ages_of_people: Array = ["Kid", "Adult", "Elderly"]
+const occupations_of_people: Array = ["Jogging", "Taking a slow poetic walk", 
+"Walking a dog", "Going to the store", "On his way to work", 
+"Resting a little", "Feeding birds", "Going home from work", 
+"Going home from school", "Going home from university",
+"Going home after visiting friends", "Going home after shopping", 
+"Being very calm", "Admiring nature", "Listening to the sounds of birds",
+"Taking some photos of nature", "Thinking about his evening meal"]
+const descriptions: Array = ["Just a person", "Just a bacinger", "Early bird"]
 
 func _input(event) -> void:
-	if event.is_action_pressed("click"):
+	if event.is_action_pressed("right_click"):
 		test_passerby(get_global_mouse_position())
 		
 func _ready() -> void:
@@ -21,24 +36,46 @@ func _ready() -> void:
 	roads = get_roads()
 	navigation = exits + targets + roads
 	make_connections()
-	for _i in range(0):
+	for _i in range(2):
 		create_passerby()
 		
-
 func create_passerby():
+	var description = generate_description()
 	exits.shuffle()
 	var p = passerby.instance()
-	p.translate(exits[0].position)
-	p.call_deferred("init", exits[0], exits[1])
-	objects.call_deferred("add_child", p)
-
+	for potential_exit in range(exits.size()):
+		if !(exits[potential_exit] in recent_exits): 
+			p.translate(exits[potential_exit].position)
+			if (potential_exit != 1):
+				p.call_deferred("init", exits[potential_exit], exits[1], description)
+			else:
+				p.call_deferred("init", exits[potential_exit], exits[0], description)
+			objects.call_deferred("add_child", p)
+			
+			recent_exits.push_front(exits[potential_exit])
+			if recent_exits.size() > 5:
+				recent_exits.pop_back()
+			return
+				
 func test_passerby(pos: Vector2):
+	var description = generate_description()
 	exits.shuffle()
 	var p = passerby.instance()
 	p.translate(pos)
-	p.call_deferred("init", exits[0], exits[1])
+	p.call_deferred("init", exits[0], exits[1], description)
 	objects.call_deferred("add_child", p)
 
+func generate_description() -> Array:
+	var res := []
+	var gender = genders[randi() % genders.size()]
+	res.append(gender)
+	if gender == "F":
+		res.append(F_names_list[randi() % F_names_list.size()])
+	elif gender == "M":
+		res.append(M_names_list[randi() % M_names_list.size()])
+	res.append(descriptions[randi() % descriptions.size()])
+	return res
+	
 func make_connections() -> void:
 	var exit1 = exits[0]
 	var exit2 = exits[1]
@@ -127,12 +164,26 @@ func create_connection(first: Node2D, second: Node2D) -> void:
 	
 func give_path(from: Vector2, destination: Node) -> Array:
 	var current = get_closest_navigation(from)	
-	
-	visited = []
 	var path = search_path(current, destination)
 	return path
 	
+func give_path_to_bench(from: Vector2) -> Array:
+	var current = get_closest_navigation(from)	
+	var target_index := randi() % targets.size()
+	var path = search_path(current, targets[target_index])
+	return path
+
+func free_bench(position: Vector2):
+	occupied_targets.erase(get_closest_navigation(position))
+	
+func occupy_bench(position: Vector2):
+	occupied_targets.push_front(get_closest_navigation(position))
+	
+func is_bench_occupied(bench: Node) -> bool:
+	return occupied_targets.has(bench)
+	
 func search_path(current: Node, target: Node) -> Array:
+	visited = []
 	var stack: Array = [current]
 	while(stack.size() > 0):
 		var connection = stack.back()
@@ -156,7 +207,6 @@ func search_path(current: Node, target: Node) -> Array:
 	print_debug("This shouldn't happen.")
 	return [Vector2(-100,-100)]	
 	
-	
 func get_closest_navigation(from: Vector2) -> Node:
 	var result_navigation: Node;
 	var distance: float = 9999999;
@@ -178,3 +228,5 @@ func get_targets() -> Array:
 func get_roads() -> Array:
 	return get_node("Navigation/Roads").get_children()
 	
+func _on_Timer_timeout():
+	create_passerby()

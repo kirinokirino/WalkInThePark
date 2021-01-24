@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Navigation/Exit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Navigation/Road.tscn" type="PackedScene" id=2]
 [ext_resource path="res://park2.png" type="Texture" id=3]
 [ext_resource path="res://Navigation/Bench.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Park.gd" type="Script" id=5]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Control.gd" type="Script" id=7]
+
+[sub_resource type="CircleShape2D" id=1]
 
 [node name="Park" type="Node2D"]
 script = ExtResource( 5 )
@@ -24,11 +28,11 @@ __meta__ = {
 [node name="Targets" type="Node" parent="Navigation"]
 
 [node name="Bench1" parent="Navigation/Targets" instance=ExtResource( 4 )]
-position = Vector2( 190.273, 632.658 )
+position = Vector2( 185.233, 612.499 )
 rotation = -3.30042
 
 [node name="Bench2" parent="Navigation/Targets" instance=ExtResource( 4 )]
-position = Vector2( 2354.63, 366.276 )
+position = Vector2( 2344.55, 376.355 )
 rotation = 0.253073
 
 [node name="Exits" type="Node" parent="Navigation"]
@@ -136,5 +140,27 @@ position = Vector2( 1452.31, 1462.98 )
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 42.8115, 52.3251 )
 anchor_mode = 0
-current = true
 zoom = Vector2( 2.7, 2.7 )
+
+[node name="Player" parent="." instance=ExtResource( 6 )]
+position = Vector2( 1780.28, 620.619 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 7.0
+autostart = true
+
+[node name="Control" type="Control" parent="."]
+margin_right = 2868.0
+margin_bottom = 1715.0
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cursor" type="Area2D" parent="Control"]
+collision_layer = 1048575
+collision_mask = 1048575
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Cursor"]
+shape = SubResource( 1 )
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
