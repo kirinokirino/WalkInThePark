@@ -8,6 +8,10 @@ onready var focusCone: Polygon2D = $FocusCone
 const unfocusedPosition := Vector2(100,0)
 onready var vision: Area2D = $Vision
 onready var bench_wait: Timer = $BenchWait
+onready var info: Panel = $UI/Info
+onready var text: Label = $UI/Info/Text
+
+var thoughts = preload("res://thoughts.gd")
 
 # Path variables
 var wants_to_rest_on_a_bench: bool;
@@ -44,6 +48,7 @@ func init(_origin: Node, _target_exit: Node, _description: Array) -> void:
 	origin = _origin
 	target_exit = _target_exit
 	description = _description
+	#thought = thoughts.thought()
 
 func _physics_process(delta):
 	focusCheck(delta)
@@ -58,7 +63,9 @@ func _physics_process(delta):
 		position += walking(delta) * delta
 		
 func get_info():
-	return (description[1] + ", " + description[2])
+	var info_text: String = description[1] + ", " + description[2] + "\nThought: " + thoughts.thought()
+
+	return (info_text)
 	
 # Movement ----------------------------------------------------
 		
